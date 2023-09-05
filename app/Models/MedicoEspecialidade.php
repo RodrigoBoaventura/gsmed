@@ -11,5 +11,6 @@ class MedicoEspecialidade extends Model
 
     protected $table = 'medicos_especialidades';
 
-    protected $fillable = ['ESPECIALIDADES_id', 'MEDICOS_id'];
+    protected $fillable = ['especialidaes_id', 'medicos_id'];
+    public $timestamps = true;
 }

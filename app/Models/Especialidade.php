@@ -11,4 +11,5 @@ class Especialidade extends Model
     protected $table = 'especialidades';
 
     protected $fillable = ['nome', 'descricao'];
+    public $timestamps = true;
 }

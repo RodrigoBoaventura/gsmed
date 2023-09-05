@@ -10,5 +10,12 @@ class Medico extends Model
 
     protected $table = 'medicos';
 
-    protected $fillable = ['nome', 'CRM', 'telefone', 'email', 'dt_cadastro'];
+    protected $fillable = ['nome', 'crm', 'telefone', 'email', 'dt_cadastro'];
+    public $timestamps = true;
+
+    public function especialidades()
+    {
+        return $this->belongsToMany(Especialidade::class, 'medicos_especialidades', 'medicos_id', 'especialidades_id');
+    }
+
 }

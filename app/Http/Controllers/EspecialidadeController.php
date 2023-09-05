@@ -20,22 +20,42 @@ class EspecialidadeController extends Controller
 
     public function store(Request $request)
     {
-        // Lógica para armazenar uma nova especialidade no banco de dados
-    }
+         // Valide os dados do formulário
+        $validatedData = $request->validate([
+            'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+        ]);
 
+        // Crie uma nova especialidade no banco de dados
+        Especialidade::create($validatedData);
+
+        return redirect()->route('especialidades.create')->with('success', 'Especialidade cadastrada com sucesso.');
+    }
     public function edit($id)
     {
-        // Lógica para editar uma especialidade com o ID especificado
+        $especialidade = Especialidade::findOrFail($id);
+    
+        return view('especialidades.edit', compact('especialidade'));
     }
+    public function destroy(Especialidade $especialidade)
+    {
+        $especialidade->delete();
 
+        return redirect()->route('especialidades.index')->with('success', 'Especialidade excluída com sucesso.');
+    }
     public function update(Request $request, $id)
     {
-        // Lógica para atualizar uma especialidade com o ID especificado
+        $validatedData = $request->validate([
+            'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string|max:255',
+        ]);
+    
+        $especialidade = Especialidade::findOrFail($id);
+        $especialidade->update($validatedData);
+    
+        return redirect()->route('especialidades.index')->with('success', 'Especialidade atualizada com sucesso.');
     }
 
-    public function destroy($id)
-    {
-        // Lógica para excluir uma especialidade com o ID especificado
-    }
+
 }
 
