@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Especialidade; // Importe o modelo de Especialidade
+use App\Models\Especialidade; 
 
 class EspecialidadeController extends Controller
 {
@@ -20,13 +20,13 @@ class EspecialidadeController extends Controller
 
     public function store(Request $request)
     {
-         // Valide os dados do formulário
+         
         $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
         ]);
 
-        // Crie uma nova especialidade no banco de dados
+        
         Especialidade::create($validatedData);
 
         return redirect()->route('especialidades.create')->with('success', 'Especialidade cadastrada com sucesso.');
@@ -39,9 +39,13 @@ class EspecialidadeController extends Controller
     }
     public function destroy(Especialidade $especialidade)
     {
-        $especialidade->delete();
-
-        return redirect()->route('especialidades.index')->with('success', 'Especialidade excluída com sucesso.');
+        try {
+            $especialidade->delete();
+            
+            return redirect()->route('especialidades.index')->with('success', 'Especialidade excluída com sucesso.');
+        } catch (\Exception $e) {
+            return redirect()->route('especialidades.index')->with('error', 'Ocorreu um erro ao excluir a especialidade.');
+        }
     }
     public function update(Request $request, $id)
     {

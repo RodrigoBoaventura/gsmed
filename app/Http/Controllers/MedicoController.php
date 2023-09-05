@@ -51,9 +51,12 @@ class MedicoController extends Controller
     }
     public function destroy(Medico $medico)
     {
+        $medico->especialidades()->detach();
+
+    
         $medico->delete();
 
-        return redirect()->route('medicos.index')->with('success', 'Médico excluído com sucesso.');
+        return redirect()->route('medicos.index')->with('success', 'Médico e suas especialidades foram excluídos com sucesso.');
     }
     public function update(Request $request, $id)
     {
